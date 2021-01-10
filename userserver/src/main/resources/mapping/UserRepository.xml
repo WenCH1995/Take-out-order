@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wench.user.repository.UserRepository">
+
+	<resultMap id="userMap" type="com.wench.user.entity.User">
+		<id property="id" column="mid"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="nickname" column="nickname"/>
+		<result property="gender" column="gender"/>
+		<result property="telephone" column="telephone"/>
+		<result property="registerdate" column="registerdate"/>
+		<result property="address" column="address"/>
+	</resultMap>
+
+	<select id="findAll" resultType="com.wench.user.entity.User">
+		select * from t_user order by id limit #{param1},#{param2}
+	</select>
+
+	<select id="count" resultType="int">
+		select count(*) from t_user;
+	</select>
+
+	<insert id="save" parameterType="com.wench.user.entity.User">
+		insert into t_user(username,password,nickname,gender,telephone,registerdate,address) values(#{username},#{password},#{nickname},#{gender},#{telephone},#{registerdate},#{address})
+	</insert>
+
+	<delete id="deleteById" parameterType="long">
+		delete from t_user where id = #{id}
+	</delete>
+
+	<update id="update" parameterType="com.wench.user.entity.User">
+		update t_user set nickname = #{nickname},telephone = #{telephone} where id = #{id}
+	</update>
+
+	<select id="findById" resultMap="userMap">
+		select * from t_user where id = #{id}
+	</select>
+</mapper>
